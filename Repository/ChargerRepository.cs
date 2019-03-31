@@ -17,7 +17,7 @@ namespace SolarMonitoringSystem.Repository
         public ushort[] Read()
         {
             // ENUM each value is index in enum
-            return ReadHoldingRegisters(_modbusSlaveConfiguration.ChargerSlaveId, 1, 2);
+            return new ushort[1];// ReadHoldingRegisters(_modbusSlaveConfiguration.ChargerSlaveId, 1, 2);
         }
     }
 }

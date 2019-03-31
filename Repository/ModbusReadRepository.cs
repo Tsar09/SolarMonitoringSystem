@@ -2,6 +2,7 @@
 using NModbus;
 using SolarMonitoringSystem.Infrastructure;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace SolarMonitoringSystem.Repository
 {
@@ -14,13 +15,18 @@ namespace SolarMonitoringSystem.Repository
             _modbusSlaveConfiguration = modbusSlaveConfiguration.Value;
         }
 
-        public ushort[] ReadHoldingRegisters(byte slaveAddress, ushort startAddress, ushort registersCount)
+        public async Task<ushort[]> ReadHoldingRegisters(byte slaveAddress, ushort startAddress, ushort registersCount)
         {
-            using (TcpClient client = new TcpClient(_modbusSlaveConfiguration.IpAddress, _modbusSlaveConfiguration.Port))
-            {
+            //using (TcpClient client = new TcpClient(_modbusSlaveConfiguration.IpAddress, _modbusSlaveConfiguration.Port))
+            //{
+                TcpClient client = new TcpClient();
+                await client.ConnectAsync(_modbusSlaveConfiguration.IpAddress, _modbusSlaveConfiguration.Port);
                 IModbusMaster modbus = new ModbusFactory().CreateMaster(client);
-                return modbus.ReadHoldingRegisters(slaveAddress, startAddress, registersCount);
-            }
+                var t = await modbus.ReadHoldingRegistersAsync(slaveAddress, startAddress, registersCount);
+                client.Close();
+                return t;
+          //  }
+
         }
     }
 }

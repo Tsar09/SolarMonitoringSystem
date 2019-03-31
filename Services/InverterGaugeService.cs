@@ -1,6 +1,7 @@
 ﻿using Prometheus;
 using SolarMonitoringSystem.Repository.Interfaces;
 using SolarMonitoringSystem.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace SolarMonitoringSystem.Services
 {
@@ -25,9 +26,9 @@ namespace SolarMonitoringSystem.Services
         {
         }
 
-        public void ProcessSecondBatchData()
+        public async Task ProcessSecondBatchData()
         {
-            var data = _inverterRepository.ReadSecondBatchData();
+            var data = await _inverterRepository.ReadSecondBatchData();
             SetGauge(nameof(data.AbsorbChargerCurrentSet), data.AbsorbChargerCurrentSet);
             SetGauge(nameof(data.BatteryAH), data.BatteryAH);
             SetGauge(nameof(data.BatteryHighVoltage), data.BatteryHighVoltage);
@@ -117,10 +118,10 @@ namespace SolarMonitoringSystem.Services
 
         private void SetGauge(string metricName, double metricValue)
         {
-            //Metrics.CreateGauge(metricName, "", new GaugeConfiguration
-            //{
-            //    SuppressInitialValue = true             
-            //}).Set(metricValue);
+            Metrics.CreateGauge(metricName, "", new GaugeConfiguration
+            {
+                SuppressInitialValue = true
+            }).Set(metricValue);
         }
 
     }

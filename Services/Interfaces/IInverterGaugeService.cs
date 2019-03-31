@@ -1,4 +1,6 @@
 ﻿
+using System.Threading.Tasks;
+
 namespace SolarMonitoringSystem.Services.Interfaces
 {
     public interface IInverterGaugeService 
@@ -7,7 +9,7 @@ namespace SolarMonitoringSystem.Services.Interfaces
 
         void ProcessFirstBatchData();
 
-        void ProcessSecondBatchData();
+        Task ProcessSecondBatchData();
 
         void ProcessThirdBatchData();
 

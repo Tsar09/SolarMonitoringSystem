@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using SolarMonitoringSystem.Data;
 using SolarMonitoringSystem.Infrastructure;
 using SolarMonitoringSystem.Repository.Interfaces;
+using System.Threading.Tasks;
 
 namespace SolarMonitoringSystem.Repository
 {
@@ -15,7 +16,7 @@ namespace SolarMonitoringSystem.Repository
         private const int FirstBatchRegistersCountToRead = 16;
 
         private const int SecondBatchStartRegisterAddress = 20102;
-        private const int SecondBatchRegistersCountToRead = 42;
+        private const int SecondBatchRegistersCountToRead = 1; // 42;
 
         private const int ThirdBatchStartRegisterAddress = 25202;
         private const int ThirdBatchRegistersCountToRead = 40;
@@ -55,10 +56,10 @@ namespace SolarMonitoringSystem.Repository
             };
         }
 
-        public SecondBatchInverterData ReadSecondBatchData()
+        public async Task<SecondBatchInverterData> ReadSecondBatchData()
         {
-            //var data = ReadHoldingRegisters(_modbusSlaveConfiguration.InvertorSlaveId, SecondBatchStartRegisterAddress, SecondBatchRegistersCountToRead);
-            var data = new ushort[100];
+            var data = await ReadHoldingRegisters(_modbusSlaveConfiguration.InvertorSlaveId, SecondBatchStartRegisterAddress, SecondBatchRegistersCountToRead);
+            //var data = new ushort[100];
             _logger.LogInformation($"Read SECOND batch inverter batch: { string.Join(", ", data) }");
             return new SecondBatchInverterData
             {

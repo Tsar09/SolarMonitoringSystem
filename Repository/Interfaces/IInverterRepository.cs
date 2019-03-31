@@ -1,4 +1,5 @@
 ﻿using SolarMonitoringSystem.Data;
+using System.Threading.Tasks;
 
 namespace SolarMonitoringSystem.Repository.Interfaces
 {
@@ -8,7 +9,7 @@ namespace SolarMonitoringSystem.Repository.Interfaces
 
         FirstBatchInverterData ReadFirstBatchData();
 
-        SecondBatchInverterData ReadSecondBatchData();
+        Task<SecondBatchInverterData> ReadSecondBatchData();
 
         ThirdBatchInverterData ReadThirdBatchData();
 

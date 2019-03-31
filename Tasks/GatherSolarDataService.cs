@@ -30,15 +30,15 @@ namespace SolarMonitoringSystem.Tasks
             while (true)
             {
                 _logger.LogInformation("SECOND INVERTER DATA FEATCHING IS STARTING.");
-                _inverterGaugeService.ProcessSecondBatchData();
+                await _inverterGaugeService.ProcessSecondBatchData();
                 await Task.Delay(20000);
 
-                _logger.LogInformation("THIRD INVERTER DATA FEATCHING IS STARTING.");
-                _inverterGaugeService.ProcessThirdBatchData();
+                //_logger.LogInformation("THIRD INVERTER DATA FEATCHING IS STARTING.");
+                //_inverterGaugeService.ProcessThirdBatchData();
 
-                await Task.Delay(20000);
-                _logger.LogInformation("FOURTH INVERTER DATA FEATCHING IS STARTING.");
-                _inverterGaugeService.ProcessFourthBatchData();
+                //await Task.Delay(20000);
+                //_logger.LogInformation("FOURTH INVERTER DATA FEATCHING IS STARTING.");
+                //_inverterGaugeService.ProcessFourthBatchData();
 
                 await Task.Delay(20000);
             }
