@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SolarMonitoringSystem.Services.Interfaces;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,18 +30,26 @@ namespace SolarMonitoringSystem.Tasks
         {
             while (true)
             {
-                _logger.LogInformation("SECOND INVERTER DATA FEATCHING IS STARTING.");
-                await _inverterGaugeService.ProcessSecondBatchData();
-                await Task.Delay(20000);
+                try
+                {
+                    _logger.LogInformation("SECOND INVERTER DATA FEATCHING IS STARTING.");
+                    await _inverterGaugeService.ProcessSecondBatchData();
+                    await Task.Delay(20000);
 
-                //_logger.LogInformation("THIRD INVERTER DATA FEATCHING IS STARTING.");
-                //_inverterGaugeService.ProcessThirdBatchData();
+                    //_logger.LogInformation("THIRD INVERTER DATA FEATCHING IS STARTING.");
+                    //_inverterGaugeService.ProcessThirdBatchData();
 
-                //await Task.Delay(20000);
-                //_logger.LogInformation("FOURTH INVERTER DATA FEATCHING IS STARTING.");
-                //_inverterGaugeService.ProcessFourthBatchData();
+                    //await Task.Delay(20000);
+                    //_logger.LogInformation("FOURTH INVERTER DATA FEATCHING IS STARTING.");
+                    //_inverterGaugeService.ProcessFourthBatchData();
 
-                await Task.Delay(20000);
+                    await Task.Delay(20000);
+                } 
+                catch(Exception e)
+                {
+                    _logger.LogInformation("DATA FEATCHING IS FAILED: {0}", e);
+                    await Task.Delay(50000);
+                }
             }
         }
 
